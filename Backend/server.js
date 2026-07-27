@@ -3,6 +3,7 @@ dotenv.config();
 import express from "express";
 import connectDB from "./src/database/dbConfig.js";
 import userRouter from "./src/routes/user.routes.js";
+import categoryRouter from "./src/routes/category.routes.js";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/users", userRouter);
+app.use("/api/users", categoryRouter);
 
 const port = process.env.PORT || 3500;
 

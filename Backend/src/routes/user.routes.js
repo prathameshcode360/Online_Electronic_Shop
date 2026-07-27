@@ -8,13 +8,22 @@ import {
 } from "../controllers/user.controller.js";
 import authenticate from "../middleware/auth.middleware.js";
 import authorize from "../middleware/authorize.middleware.js";
+import validate from "../middleware/validate.middleware.js";
+import {
+  registerUserSchema,
+  loginUserSchema,
+} from "../validations/user.validation.js";
 
 const userRouter = express.Router();
 
-userRouter.post("/register", register);
-userRouter.post("/login", login);
+// Public Routes
+userRouter.post("/register", validate(registerUserSchema), register);
+userRouter.post("/login", validate(loginUserSchema), login);
 
+// Protected Routes
 userRouter.get("/profile", authenticate, getProfile);
+
+// Admin Routes
 userRouter.get("/", authenticate, authorize("admin"), getUsers);
 userRouter.get("/:id", authenticate, authorize("admin"), getUserById);
 
