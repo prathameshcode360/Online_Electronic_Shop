@@ -4,6 +4,8 @@ import express from "express";
 import connectDB from "./src/database/dbConfig.js";
 import userRouter from "./src/routes/user.routes.js";
 import categoryRouter from "./src/routes/category.routes.js";
+import productRouter from "./src/routes/product.routes.js";
+import cartRouter from "./src/routes/cart.routes.js";
 
 const app = express();
 
@@ -16,6 +18,7 @@ app.get("/", (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/api/users", categoryRouter);
 app.use("/api/users", productRouter);
+app.use("/api/users", cartRouter);
 
 const port = process.env.PORT || 3500;
 
