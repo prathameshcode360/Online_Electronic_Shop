@@ -22,15 +22,20 @@ import {
 const orderRouter = express.Router();
 
 // Customer Routes
+
+// Create a new order
 orderRouter.post("/", authenticate, validate(createOrderSchema), createOrder);
 
+// Get logged-in user's orders
 orderRouter.get("/", authenticate, getMyOrders);
 
-orderRouter.get("/:orderId", authenticate, getOrderById);
-
 // Admin Routes
+
+// Get all orders
+
 orderRouter.get("/all", authenticate, authorize("admin"), getAllOrders);
 
+// Update order status
 orderRouter.put(
   "/:orderId/status",
   authenticate,
@@ -39,6 +44,7 @@ orderRouter.put(
   updateOrderStatus,
 );
 
+// Update payment status
 orderRouter.put(
   "/:orderId/payment-status",
   authenticate,
@@ -46,5 +52,9 @@ orderRouter.put(
   validate(updatePaymentStatusSchema),
   updatePaymentStatus,
 );
+
+// Shared Routes
+
+orderRouter.get("/:orderId", authenticate, getOrderById);
 
 export default orderRouter;
