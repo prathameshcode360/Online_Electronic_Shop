@@ -13,7 +13,7 @@ export const createCategorySchema = z.object({
     .max(300, "Description cannot exceed 300 characters")
     .optional(),
 
-  isActive: z.boolean().optional(),
+  isActive: z.coerce.boolean().optional(),
 });
 
 export const updateCategorySchema = z.object({
@@ -30,5 +30,5 @@ export const updateCategorySchema = z.object({
     .max(300, "Description cannot exceed 300 characters")
     .optional(),
 
-  isActive: z.boolean().optional(),
+  isActive: z.coerce.boolean().optional(),
 });

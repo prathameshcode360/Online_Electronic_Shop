@@ -14,10 +14,21 @@ export const createCategory = async (req, res) => {
       });
     }
 
+    if (!req.file) {
+      return res.status(400).json({
+        success: false,
+        message: "Category image is required",
+      });
+    }
+
+    // Upload image to Cloudinary
+    const uploadedImage = await uploadToCloudinary(req.file.buffer);
+
     // Create category
     const category = await Category.create({
       name,
       description,
+      image: uploadedImage,
       isActive,
     });
 
@@ -87,17 +98,37 @@ export const updateCategory = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const updatedCategory = await Category.findByIdAndUpdate(id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const existingCategory = await Category.findById(id);
 
-    if (!updatedCategory) {
+    if (!existingCategory) {
       return res.status(404).json({
         success: false,
         message: "Category not found",
       });
     }
+
+    let updatedImage = existingCategory.image;
+
+    // If a new image is uploaded
+    if (req.file) {
+      // Delete old image from Cloudinary
+      await deleteFromCloudinary(existingCategory.image.publicId);
+
+      // Upload new image
+      updatedImage = await uploadToCloudinary(req.file.buffer);
+    }
+
+    const updatedCategory = await Category.findByIdAndUpdate(
+      id,
+      {
+        ...req.body,
+        image: updatedImage,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
 
     return res.status(200).json({
       success: true,
@@ -118,14 +149,20 @@ export const deleteCategory = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const deletedCategory = await Category.findByIdAndDelete(id);
+    const existingCategory = await Category.findById(id);
 
-    if (!deletedCategory) {
+    if (!existingCategory) {
       return res.status(404).json({
         success: false,
         message: "Category not found",
       });
     }
+
+    // Delete image from Cloudinary
+    await deleteFromCloudinary(existingCategory.image.publicId);
+
+    // Delete category
+    await Category.findByIdAndDelete(id);
 
     return res.status(200).json({
       success: true,

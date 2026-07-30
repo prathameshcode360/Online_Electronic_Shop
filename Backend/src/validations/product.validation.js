@@ -21,18 +21,16 @@ export const createProductSchema = z.object({
 
   category: z.string().trim().min(1, "Category is required"),
 
-  price: z.number().min(0, "Price cannot be negative"),
+  price: z.coerce.number().min(0, "Price cannot be negative"),
 
-  stock: z
+  stock: z.coerce
     .number()
     .int("Stock must be an integer")
     .min(0, "Stock cannot be negative"),
 
-  images: z.array(z.string().trim()).optional(),
+  isFeatured: z.coerce.boolean().optional(),
 
-  isFeatured: z.boolean().optional(),
-
-  isActive: z.boolean().optional(),
+  isActive: z.coerce.boolean().optional(),
 });
 
 export const updateProductSchema = z.object({
@@ -59,17 +57,15 @@ export const updateProductSchema = z.object({
 
   category: z.string().trim().optional(),
 
-  price: z.number().min(0, "Price cannot be negative").optional(),
+  price: z.coerce.number().min(0, "Price cannot be negative").optional(),
 
-  stock: z
+  stock: z.coerce
     .number()
     .int("Stock must be an integer")
     .min(0, "Stock cannot be negative")
     .optional(),
 
-  images: z.array(z.string().trim()).optional(),
+  isFeatured: z.coerce.boolean().optional(),
 
-  isFeatured: z.boolean().optional(),
-
-  isActive: z.boolean().optional(),
+  isActive: z.coerce.boolean().optional(),
 });
