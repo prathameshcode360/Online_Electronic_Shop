@@ -1,7 +1,11 @@
 import dotenv from "dotenv";
 dotenv.config();
+
 import express from "express";
+import cors from "cors";
+
 import connectDB from "./src/database/dbConfig.js";
+
 import userRouter from "./src/routes/user.routes.js";
 import categoryRouter from "./src/routes/category.routes.js";
 import productRouter from "./src/routes/product.routes.js";
@@ -14,6 +18,14 @@ import notFoundHandler from "./src/middleware/notFound.middleware.js";
 import errorHandler from "./src/middleware/error.middleware.js";
 
 const app = express();
+
+// Middlewares
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 
@@ -40,6 +52,7 @@ const port = process.env.PORT || 3500;
 const startServer = async () => {
   try {
     await connectDB();
+
     app.listen(port, () => {
       console.log(`🚀 Server is running on port ${port}`);
     });
