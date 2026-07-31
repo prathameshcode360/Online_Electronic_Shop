@@ -1,0 +1,428 @@
+.newsletter {
+  padding: var(--spacing-2xl) 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-dark) 0%,
+    var(--color-dark-light) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background elements */
+.newsletter::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 193, 7, 0.06) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.newsletter::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 193, 7, 0.04) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* Decorative dots pattern */
+.newsletter .pattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px
+  );
+  background-size: 30px 30px;
+  pointer-events: none;
+}
+
+.newsletterContent {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-white);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: -0.5px;
+}
+
+/* Optional: Add an icon before title */
+.title::before {
+  content: "📬 ";
+  display: inline-block;
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-10deg);
+  }
+  75% {
+    transform: rotate(10deg);
+  }
+}
+
+.description {
+  font-size: var(--font-size-md);
+  color: var(--color-text-light);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-xl);
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.newsletterForm {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-full);
+  padding: var(--spacing-xs);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition);
+}
+
+.newsletterForm:focus-within {
+  box-shadow: 0 8px 40px rgba(255, 193, 7, 0.15);
+  transform: scale(1.01);
+}
+
+.emailInput {
+  flex: 1;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  min-width: 0;
+}
+
+.emailInput::placeholder {
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-normal);
+}
+
+.emailInput:focus {
+  color: var(--color-text-primary);
+}
+
+.subscribeButton {
+  padding: var(--spacing-md) var(--spacing-2xl);
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Button shine effect */
+.subscribeButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left var(--transition-slow);
+}
+
+.subscribeButton:hover::before {
+  left: 100%;
+}
+
+.subscribeButton:hover {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 193, 7, 0.3);
+}
+
+.subscribeButton:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.2);
+}
+
+/* Success message styling (for when implemented) */
+.successMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background-color: rgba(34, 197, 94, 0.1);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-md);
+  color: var(--color-success);
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--spacing-md);
+  animation: fadeInUp 0.5s ease;
+}
+
+.successMessage::before {
+  content: "✅";
+  font-size: var(--font-size-lg);
+}
+
+/* Error message styling (for when implemented) */
+.errorMessage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+  color: var(--color-danger);
+  font-weight: var(--font-weight-medium);
+  margin-top: var(--spacing-md);
+  animation: fadeInUp 0.5s ease;
+}
+
+.errorMessage::before {
+  content: "❌";
+  font-size: var(--font-size-lg);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Optional: Floating animation for the envelope icon */
+.newsletter .envelopeIcon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-md);
+  animation: float 4s ease-in-out infinite;
+  display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .newsletter {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .title {
+    font-size: var(--font-size-xl);
+  }
+
+  .title::before {
+    content: "📬 ";
+  }
+
+  .description {
+    font-size: var(--font-size-sm);
+    padding: 0 var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .newsletterForm {
+    flex-direction: column;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    max-width: 400px;
+    gap: var(--spacing-sm);
+  }
+
+  .newsletterForm:focus-within {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .emailInput {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .emailInput:focus {
+    box-shadow: 0 4px 20px rgba(255, 193, 7, 0.15);
+  }
+
+  .subscribeButton {
+    width: 100%;
+    padding: var(--spacing-md) var(--spacing-xl);
+    justify-content: center;
+  }
+
+  .newsletter::before,
+  .newsletter::after {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newsletter {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .title {
+    font-size: var(--font-size-lg);
+  }
+
+  .title::before {
+    content: "📬 ";
+    font-size: var(--font-size-lg);
+  }
+
+  .description {
+    font-size: var(--font-size-xs);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .emailInput {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
+
+  .subscribeButton {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: var(--font-size-xs);
+  }
+
+  .newsletterForm {
+    max-width: 100%;
+    padding: 0 var(--spacing-sm);
+  }
+
+  .newsletter::before,
+  .newsletter::after {
+    display: none;
+  }
+
+  .successMessage,
+  .errorMessage {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/* Optional: Card style variation with white background */
+.newsletter.cardStyle {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  margin: var(--spacing-2xl) auto;
+  max-width: 800px;
+  padding: var(--spacing-2xl);
+  box-shadow: var(--shadow-lg);
+}
+
+.newsletter.cardStyle .title {
+  color: var(--color-text-primary);
+}
+
+.newsletter.cardStyle .description {
+  color: var(--color-text-secondary);
+}
+
+.newsletter.cardStyle .emailInput {
+  background-color: var(--color-background);
+}
+
+.newsletter.cardStyle .emailInput:focus {
+  background-color: var(--color-surface);
+}
+
+.newsletter.cardStyle .newsletterForm {
+  background: var(--color-background);
+  box-shadow: var(--shadow-sm);
+}
+
+.newsletter.cardStyle .newsletterForm:focus-within {
+  box-shadow: var(--shadow-md);
+}
+
+/* Optional: Minimal style */
+.newsletter.minimal {
+  background: transparent;
+  padding: var(--spacing-xl) 0;
+}
+
+.newsletter.minimal::before,
+.newsletter.minimal::after {
+  display: none;
+}
+
+.newsletter.minimal .newsletterForm {
+  background: var(--color-background);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+.newsletter.minimal .title {
+  color: var(--color-text-primary);
+}
+
+.newsletter.minimal .description {
+  color: var(--color-text-secondary);
+}

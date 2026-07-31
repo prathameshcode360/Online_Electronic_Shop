@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./Hero.module.css";
+import HeroImage from "../../../assets/Images/Hero.png";
 
 const Hero = () => {
   return (
@@ -26,10 +27,7 @@ const Hero = () => {
       </div>
 
       <div className={styles.heroImage}>
-        <img
-          src="/src/assets/images/hero-banner.png"
-          alt="Electronic Gadgets"
-        />
+        <img src={HeroImage} alt="Electronic Gadgets" />
       </div>
     </section>
   );

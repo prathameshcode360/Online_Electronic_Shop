@@ -2,7 +2,7 @@ import styles from "./Header.module.css";
 
 import Logo from "../../common/Logo/Logo";
 import SearchBar from "../../common/SearchBar/SearchBar";
-import HeaderActions from "../../common/HeaderActions/HeaderActions";
+import HeaderActions from "./HeaderActions";
 
 const Header = () => {
   return (

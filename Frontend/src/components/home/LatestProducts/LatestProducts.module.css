@@ -1,0 +1,459 @@
+.latestProducts {
+  padding: var(--spacing-2xl) 0;
+  background: linear-gradient(
+    180deg,
+    var(--color-surface) 0%,
+    var(--color-background) 100%
+  );
+  position: relative;
+}
+
+/* Decorative top border accent */
+.latestProducts::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-primary-light),
+    var(--color-primary)
+  );
+  opacity: 0.6;
+}
+
+/* Optional: New arrival badge decoration */
+.latestProducts::after {
+  content: "✨ New";
+  position: absolute;
+  top: var(--spacing-lg);
+  right: var(--spacing-2xl);
+  padding: var(--spacing-xs) var(--spacing-md);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-full);
+  letter-spacing: 0.5px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  position: relative;
+}
+
+.sectionHeader h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Optional: Add a small icon/emoji before the title */
+.sectionHeader h2::before {
+  content: "🆕";
+  font-size: var(--font-size-xl);
+  animation: wiggle 3s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+.sectionHeader p {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* New badge on product cards - can be applied to individual products */
+.productNewBadge {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background-color: var(--color-new);
+  color: var(--color-text-white);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  z-index: 2;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Loading & Error States */
+.latestProducts .loading,
+.latestProducts .error {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Skeleton loading state for product cards */
+.productsGrid.loading {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.productSkeleton {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.productSkeleton .imageSkeleton {
+  width: 100%;
+  padding-top: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-border-light) 25%,
+    var(--color-surface-hover) 50%,
+    var(--color-border-light) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* New badge skeleton */
+.productSkeleton .badgeSkeleton {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  width: 60px;
+  height: 24px;
+  background: linear-gradient(
+    90deg,
+    var(--color-border-light) 25%,
+    var(--color-surface-hover) 50%,
+    var(--color-border-light) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+.productSkeleton .contentSkeleton {
+  padding: var(--spacing-lg);
+}
+
+.productSkeleton .titleSkeleton {
+  height: 24px;
+  width: 80%;
+  background: var(--color-border-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.productSkeleton .priceSkeleton {
+  height: 20px;
+  width: 40%;
+  background: var(--color-border-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.productSkeleton .buttonSkeleton {
+  height: 40px;
+  width: 100%;
+  background: var(--color-border-light);
+  border-radius: var(--radius-md);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .latestProducts::after {
+    top: var(--spacing-md);
+    right: var(--spacing-xl);
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 768px) {
+  .latestProducts {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .latestProducts::after {
+    display: none;
+  }
+
+  .sectionHeader {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .sectionHeader h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .sectionHeader h2::before {
+    font-size: var(--font-size-lg);
+  }
+
+  .sectionHeader p {
+    font-size: var(--font-size-sm);
+    padding: 0 var(--spacing-md);
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    padding: 0 var(--spacing-sm);
+  }
+
+  /* Skeleton responsive */
+  .productsGrid.loading {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .productSkeleton .contentSkeleton {
+    padding: var(--spacing-md);
+  }
+
+  .productSkeleton .titleSkeleton {
+    height: 20px;
+  }
+
+  .productSkeleton .priceSkeleton {
+    height: 18px;
+  }
+
+  .productSkeleton .buttonSkeleton {
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .latestProducts {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .latestProducts::before {
+    height: 2px;
+  }
+
+  .sectionHeader h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  .sectionHeader h2::before {
+    font-size: var(--font-size-md);
+  }
+
+  .sectionHeader p {
+    font-size: var(--font-size-xs);
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    padding: 0 var(--spacing-xs);
+  }
+
+  /* Skeleton responsive */
+  .productsGrid.loading {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .productSkeleton .contentSkeleton {
+    padding: var(--spacing-sm);
+  }
+
+  .productSkeleton .titleSkeleton {
+    height: 16px;
+    width: 70%;
+  }
+
+  .productSkeleton .priceSkeleton {
+    height: 14px;
+    width: 50%;
+  }
+
+  .productSkeleton .buttonSkeleton {
+    height: 32px;
+  }
+
+  .productNewBadge {
+    font-size: 0.6rem;
+    padding: 2px var(--spacing-xs);
+    top: var(--spacing-xs);
+    right: var(--spacing-xs);
+  }
+}
+
+/* Animation for product cards appearing - with different timing for "latest" feel */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.productsGrid > * {
+  animation: slideInUp 0.7s ease forwards;
+  opacity: 0;
+}
+
+/* Staggered animation delay with faster sequence for latest products */
+.productsGrid > *:nth-child(1) {
+  animation-delay: 0.03s;
+}
+.productsGrid > *:nth-child(2) {
+  animation-delay: 0.06s;
+}
+.productsGrid > *:nth-child(3) {
+  animation-delay: 0.09s;
+}
+.productsGrid > *:nth-child(4) {
+  animation-delay: 0.12s;
+}
+.productsGrid > *:nth-child(5) {
+  animation-delay: 0.15s;
+}
+.productsGrid > *:nth-child(6) {
+  animation-delay: 0.18s;
+}
+.productsGrid > *:nth-child(7) {
+  animation-delay: 0.21s;
+}
+.productsGrid > *:nth-child(8) {
+  animation-delay: 0.24s;
+}
+.productsGrid > *:nth-child(9) {
+  animation-delay: 0.27s;
+}
+.productsGrid > *:nth-child(10) {
+  animation-delay: 0.3s;
+}
+.productsGrid > *:nth-child(11) {
+  animation-delay: 0.33s;
+}
+.productsGrid > *:nth-child(12) {
+  animation-delay: 0.36s;
+}
+
+/* Optional: "View All" button for latest products */
+.viewAllButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-2xl);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  background: transparent;
+  color: var(--color-primary);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: all var(--transition);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.viewAllButton:hover {
+  background: var(--color-primary);
+  color: var(--color-text-white);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 193, 7, 0.3);
+}
+
+.viewAllButton:active {
+  transform: translateY(0);
+}
+
+.viewAllContainer {
+  text-align: center;
+  margin-top: var(--spacing-2xl);
+}
+
+/* Optional: Add a "New" tag to section header */
+.sectionHeader .newTag {
+  display: inline-block;
+  margin-left: var(--spacing-sm);
+  padding: 2px var(--spacing-sm);
+  background-color: var(--color-new);
+  color: var(--color-text-white);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  vertical-align: middle;
+}
+
+/* Optional: Latest products with different background */
+.latestProducts.altStyle {
+  background: var(--color-surface);
+}
+
+.latestProducts.altStyle .productsGrid {
+  gap: var(--spacing-lg);
+}

@@ -1,0 +1,98 @@
+.searchBar {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 500px;
+  min-width: 200px;
+  height: 45px;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-fast);
+  overflow: hidden;
+}
+
+.searchBar:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.15);
+  background-color: var(--color-surface);
+}
+
+.searchInput {
+  flex: 1;
+  height: 100%;
+  padding: 0 var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.searchInput::placeholder {
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-normal);
+}
+
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 var(--spacing-xl);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-white);
+  background-color: var(--color-primary);
+  border: none;
+  border-radius: 0 var(--radius-full) var(--radius-full) 0;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.searchButton:hover {
+  background-color: var(--color-primary-hover);
+  transform: scale(1.02);
+}
+
+.searchButton:active {
+  transform: scale(0.98);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .searchBar {
+    max-width: 300px;
+    min-width: 150px;
+    height: 40px;
+  }
+
+  .searchInput {
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
+
+  .searchButton {
+    padding: 0 var(--spacing-lg);
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .searchBar {
+    max-width: 200px;
+    min-width: 120px;
+    height: 36px;
+  }
+
+  .searchInput {
+    padding: 0 var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+
+  .searchButton {
+    padding: 0 var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
+}

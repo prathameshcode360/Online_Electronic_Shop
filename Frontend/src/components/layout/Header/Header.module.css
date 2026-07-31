@@ -1,0 +1,104 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  min-height: 80px;
+}
+
+/* Header Actions Container */
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex-shrink: 0;
+}
+
+.actionButton {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+  position: relative;
+}
+
+.actionButton:hover {
+  color: var(--color-primary);
+  background-color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+.actionButton:active {
+  transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .header {
+    gap: var(--spacing-lg);
+    padding: var(--spacing-md) var(--spacing-xl);
+    min-height: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    min-height: 60px;
+    flex-wrap: wrap;
+  }
+
+  /* Hide search bar on mobile, show as full width in separate row */
+  .header :global(.searchBar) {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: 100%;
+    min-width: 100%;
+    margin-top: var(--spacing-xs);
+  }
+
+  .headerActions {
+    gap: var(--spacing-sm);
+  }
+
+  .actionButton {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+
+  /* Show only icons on very small screens - you'll need to add icons */
+  .actionButton span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    min-height: 50px;
+    gap: var(--spacing-sm);
+  }
+
+  .headerActions {
+    gap: var(--spacing-xs);
+  }
+
+  .actionButton {
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+}

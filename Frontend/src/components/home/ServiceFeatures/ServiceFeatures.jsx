@@ -1,10 +1,10 @@
 import styles from "./ServiceFeatures.module.css";
 
 // Dummy Icons
-import shippingIcon from "../../../assets/icons/free-shipping.png";
-import returnIcon from "../../../assets/icons/easy-return.png";
-import warrantyIcon from "../../../assets/icons/warranty.png";
-import supportIcon from "../../../assets/icons/customer-support.png";
+import shippingIcon from "../../../assets/Images/Services/FreeShiping.png";
+import returnIcon from "../../../assets/Images/Services/EasyReturn.png";
+import warrantyIcon from "../../../assets/Images/Services/Warranty.png";
+import supportIcon from "../../../assets/Images/Services/CustomerSupport.png";
 
 const ServiceFeatures = () => {
   const services = [

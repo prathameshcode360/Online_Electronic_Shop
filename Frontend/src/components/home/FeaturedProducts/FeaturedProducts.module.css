@@ -1,0 +1,313 @@
+.featuredProducts {
+  padding: var(--spacing-2xl) 0;
+  background-color: var(--color-background);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.sectionHeader h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.5px;
+}
+
+.sectionHeader p {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Loading & Error States */
+.featuredProducts .loading,
+.featuredProducts .error {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Skeleton loading state for product cards */
+.productsGrid.loading {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.productSkeleton {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.productSkeleton .imageSkeleton {
+  width: 100%;
+  padding-top: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-border-light) 25%,
+    var(--color-surface-hover) 50%,
+    var(--color-border-light) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.productSkeleton .contentSkeleton {
+  padding: var(--spacing-lg);
+}
+
+.productSkeleton .titleSkeleton {
+  height: 24px;
+  width: 80%;
+  background: var(--color-border-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.productSkeleton .priceSkeleton {
+  height: 20px;
+  width: 40%;
+  background: var(--color-border-light);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.productSkeleton .buttonSkeleton {
+  height: 40px;
+  width: 100%;
+  background: var(--color-border-light);
+  border-radius: var(--radius-md);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .featuredProducts {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .sectionHeader {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .sectionHeader h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .sectionHeader p {
+    font-size: var(--font-size-sm);
+    padding: 0 var(--spacing-md);
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    padding: 0 var(--spacing-sm);
+  }
+
+  /* Skeleton responsive */
+  .productsGrid.loading {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .productSkeleton .contentSkeleton {
+    padding: var(--spacing-md);
+  }
+
+  .productSkeleton .titleSkeleton {
+    height: 20px;
+  }
+
+  .productSkeleton .priceSkeleton {
+    height: 18px;
+  }
+
+  .productSkeleton .buttonSkeleton {
+    height: 36px;
+  }
+}
+
+@media (max-width: 480px) {
+  .featuredProducts {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .sectionHeader h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  .sectionHeader p {
+    font-size: var(--font-size-xs);
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+    padding: 0 var(--spacing-xs);
+  }
+
+  /* Skeleton responsive */
+  .productsGrid.loading {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .productSkeleton .contentSkeleton {
+    padding: var(--spacing-sm);
+  }
+
+  .productSkeleton .titleSkeleton {
+    height: 16px;
+    width: 70%;
+  }
+
+  .productSkeleton .priceSkeleton {
+    height: 14px;
+    width: 50%;
+  }
+
+  .productSkeleton .buttonSkeleton {
+    height: 32px;
+  }
+}
+
+/* Optional: Add a "View All" link style - can be used in the component */
+.viewAllLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  margin-top: var(--spacing-md);
+}
+
+.viewAllLink:hover {
+  gap: var(--spacing-sm);
+  color: var(--color-primary-hover);
+}
+
+.viewAllLink::after {
+  content: "→";
+  transition: transform var(--transition-fast);
+}
+
+.viewAllLink:hover::after {
+  transform: translateX(4px);
+}
+
+/* Optional: View all container */
+.viewAllContainer {
+  text-align: center;
+  margin-top: var(--spacing-2xl);
+}
+
+/* Optional: Section with background variation */
+.featuredProducts.altBackground {
+  background: linear-gradient(
+    135deg,
+    var(--color-background) 0%,
+    var(--color-surface) 100%
+  );
+}
+
+/* Optional: Add decorative elements */
+.featuredProducts .sectionHeader .highlight {
+  color: var(--color-primary);
+}
+
+.featuredProducts .sectionHeader .subtitle {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-light);
+  margin-top: var(--spacing-xs);
+}
+
+/* Animation for product cards appearing */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.productsGrid > * {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+/* Staggered animation delay for each product card */
+.productsGrid > *:nth-child(1) {
+  animation-delay: 0.05s;
+}
+.productsGrid > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.productsGrid > *:nth-child(3) {
+  animation-delay: 0.15s;
+}
+.productsGrid > *:nth-child(4) {
+  animation-delay: 0.2s;
+}
+.productsGrid > *:nth-child(5) {
+  animation-delay: 0.25s;
+}
+.productsGrid > *:nth-child(6) {
+  animation-delay: 0.3s;
+}
+.productsGrid > *:nth-child(7) {
+  animation-delay: 0.35s;
+}
+.productsGrid > *:nth-child(8) {
+  animation-delay: 0.4s;
+}
+.productsGrid > *:nth-child(9) {
+  animation-delay: 0.45s;
+}
+.productsGrid > *:nth-child(10) {
+  animation-delay: 0.5s;
+}
+.productsGrid > *:nth-child(11) {
+  animation-delay: 0.55s;
+}
+.productsGrid > *:nth-child(12) {
+  animation-delay: 0.6s;
+}

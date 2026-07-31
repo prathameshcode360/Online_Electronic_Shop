@@ -1,0 +1,338 @@
+.categories {
+  padding: var(--spacing-2xl) 0;
+  background-color: var(--color-background);
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.sectionHeader h2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.5px;
+}
+
+.sectionHeader p {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.categoriesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* Category Card Styles */
+.categoryCard {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.categoryImage {
+  position: relative;
+  width: 100%;
+  padding-top: 75%; /* 4:3 Aspect Ratio */
+  overflow: hidden;
+  background-color: var(--color-border-light);
+}
+
+.categoryImage img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.categoryCard:hover .categoryImage img {
+  transform: scale(1.05);
+}
+
+.categoryContent {
+  padding: var(--spacing-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  transition: color var(--transition-fast);
+}
+
+.categoryCard:hover .categoryTitle {
+  color: var(--color-primary);
+}
+
+.categoryDescription {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+/* Loading & Error States */
+.categories .loading,
+.categories .error {
+  text-align: center;
+  padding: var(--spacing-2xl);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .categoriesGrid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (max-width: 768px) {
+  .categories {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .sectionHeader {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .sectionHeader h2 {
+    font-size: var(--font-size-xl);
+  }
+
+  .sectionHeader p {
+    font-size: var(--font-size-sm);
+    padding: 0 var(--spacing-md);
+  }
+
+  .categoriesGrid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+    padding: 0 var(--spacing-sm);
+  }
+
+  .categoryContent {
+    padding: var(--spacing-md);
+  }
+
+  .categoryTitle {
+    font-size: var(--font-size-md);
+  }
+
+  .categoryDescription {
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .categories {
+    padding: var(--spacing-lg) 0;
+  }
+
+  .sectionHeader h2 {
+    font-size: var(--font-size-lg);
+  }
+
+  .categoriesGrid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .categoryContent {
+    padding: var(--spacing-sm);
+  }
+
+  .categoryTitle {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .categoryDescription {
+    font-size: var(--font-size-xs);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .categoryImage {
+    padding-top: 100%; /* 1:1 Aspect Ratio for mobile */
+  }
+}
+
+/* Optional: Skeleton loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.categoryCard.loading .categoryImage {
+  background: linear-gradient(
+    90deg,
+    var(--color-border-light) 25%,
+    var(--color-surface-hover) 50%,
+    var(--color-border-light) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.categoryCard.loading .categoryTitle,
+.categoryCard.loading .categoryDescription {
+  background: var(--color-border-light);
+  border-radius: var(--radius-sm);
+  min-height: 20px;
+}
+
+.categoryCard.loading .categoryTitle {
+  width: 70%;
+}
+
+.categoryCard.loading .categoryDescription {
+  width: 90%;
+}
+
+/* CategoryCard.module.css - Extracted styles if you want separate file */
+/* 
+   Note: The styles for CategoryCard are already included in Categories.module.css 
+   above. If you prefer a separate module file, you can use this instead:
+*/
+
+.categoryCard {
+  background-color: var(--color-surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryCard:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+
+.categoryImage {
+  position: relative;
+  width: 100%;
+  padding-top: 75%;
+  overflow: hidden;
+  background-color: var(--color-border-light);
+}
+
+.categoryImage img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-slow);
+}
+
+.categoryCard:hover .categoryImage img {
+  transform: scale(1.05);
+}
+
+.categoryContent {
+  padding: var(--spacing-lg);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryTitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  transition: color var(--transition-fast);
+}
+
+.categoryCard:hover .categoryTitle {
+  color: var(--color-primary);
+}
+
+.categoryDescription {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+/* Responsive Design for CategoryCard */
+@media (max-width: 768px) {
+  .categoryContent {
+    padding: var(--spacing-md);
+  }
+
+  .categoryTitle {
+    font-size: var(--font-size-md);
+  }
+
+  .categoryDescription {
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .categoryContent {
+    padding: var(--spacing-sm);
+  }
+
+  .categoryTitle {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+  }
+
+  .categoryDescription {
+    font-size: var(--font-size-xs);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .categoryImage {
+    padding-top: 100%;
+  }
+}
