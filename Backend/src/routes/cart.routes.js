@@ -7,7 +7,7 @@ import {
   clearCart,
 } from "../controllers/cart.controller.js";
 import authenticate from "../middleware/auth.middleware.js";
-import validate from "../middleware/validate.middleware.js";
+import validate from "../middleware/validation.middleware.js";
 import {
   addToCartSchema,
   updateCartItemSchema,

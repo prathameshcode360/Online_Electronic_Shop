@@ -1,6 +1,6 @@
-import Order from "../models/Order.js";
-import Cart from "../models/Cart.js";
-import Product from "../models/Product.js";
+import Order from "../models/order.model.js";
+import Cart from "../models/cart.model.js";
+import Product from "../models/product.model.js";
 import mongoose from "mongoose";
 
 // Helper function to calculate total amount

@@ -11,7 +11,7 @@ import {
 
 import authenticate from "../middleware/auth.middleware.js";
 import authorize from "../middleware/authorize.middleware.js";
-import validate from "../middleware/validate.middleware.js";
+import validate from "../middleware/validation.middleware.js";
 import upload from "../middleware/upload.middleware.js";
 
 import {

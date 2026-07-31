@@ -8,7 +8,7 @@ import {
 } from "../controllers/user.controller.js";
 import authenticate from "../middleware/auth.middleware.js";
 import authorize from "../middleware/authorize.middleware.js";
-import validate from "../middleware/validate.middleware.js";
+import validate from "../middleware/validation.middleware.js";
 import {
   registerUserSchema,
   loginUserSchema,
