@@ -6,7 +6,7 @@ const CategoryCard = ({ category }) => {
   return (
     <article className={styles.categoryCard}>
       <div className={styles.categoryImage}>
-        <img src={image} alt={name} />
+        <img src={image.url} alt={name} />
       </div>
 
       <div className={styles.categoryContent}>
