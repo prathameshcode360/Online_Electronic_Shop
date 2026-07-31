@@ -1,31 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./LatestProducts.module.css";
 import ProductCard from "../../ui/ProductCard/ProductCard";
 
-import { getLatestProducts } from "../../../services/product.service";
+import { fetchLatestProducts } from "../../../features/products/productSlice";
 
 const LatestProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
-  const fetchLatestProducts = async () => {
-    try {
-      const data = await getLatestProducts();
-      setProducts(data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { latestProducts, latestLoading, latestError, latestFetched } =
+    useSelector((state) => state.products);
 
   useEffect(() => {
-    fetchLatestProducts();
-  }, []);
+    // ✅ Only fetch if latest products haven't been fetched yet
+    if (!latestFetched) {
+      dispatch(fetchLatestProducts());
+    }
+  }, [dispatch, latestFetched]);
 
-  if (loading) {
+  if (latestLoading) {
     return (
       <section className={styles.latestProducts}>
         <div className={styles.sectionHeader}>
@@ -38,7 +32,7 @@ const LatestProducts = () => {
     );
   }
 
-  if (error) {
+  if (latestError) {
     return (
       <section className={styles.latestProducts}>
         <div className={styles.sectionHeader}>
@@ -46,7 +40,7 @@ const LatestProducts = () => {
           <p>Explore the newest arrivals in our electronics collection.</p>
         </div>
 
-        <p>Unable to load latest products. Please try again later.</p>
+        <p>{latestError}</p>
       </section>
     );
   }
@@ -59,7 +53,7 @@ const LatestProducts = () => {
       </div>
 
       <div className={styles.productsGrid}>
-        {products.map((product) => (
+        {latestProducts.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>

@@ -1,29 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import CategoryCard from "./CategoryCard";
 import styles from "./Categories.module.css";
 
-import { getCategories } from "../../../services/category.service";
+import { fetchCategories } from "../../../features/categories/categorySlice";
 
 const Categories = () => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
-  const fetchCategories = async () => {
-    try {
-      const data = await getCategories();
-      setCategories(data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { categories, loading, error, fetched } = useSelector(
+    (state) => state.categories,
+  );
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    // ✅ Only fetch if categories haven't been fetched yet
+    if (!fetched) {
+      dispatch(fetchCategories());
+    }
+  }, [dispatch, fetched]);
 
   if (loading) {
     return (
@@ -46,7 +41,7 @@ const Categories = () => {
           <p>Browse products by your favorite categories.</p>
         </div>
 
-        <p>Unable to load categories. Please try again later.</p>
+        <p>{error}</p>
       </section>
     );
   }

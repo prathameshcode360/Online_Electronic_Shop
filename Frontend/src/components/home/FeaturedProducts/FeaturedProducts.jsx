@@ -1,31 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import styles from "./FeaturedProducts.module.css";
 import ProductCard from "../../ui/ProductCard/ProductCard";
 
-import { getFeaturedProducts } from "../../../services/product.service";
+import { fetchFeaturedProducts } from "../../../features/products/productSlice";
 
 const FeaturedProducts = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
-  const fetchFeaturedProducts = async () => {
-    try {
-      const data = await getFeaturedProducts();
-      setProducts(data);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { featuredProducts, featuredLoading, featuredError, featuredFetched } =
+    useSelector((state) => state.products);
 
   useEffect(() => {
-    fetchFeaturedProducts();
-  }, []);
+    // ✅ Only fetch if featured products haven't been fetched yet
+    if (!featuredFetched) {
+      dispatch(fetchFeaturedProducts());
+    }
+  }, [dispatch, featuredFetched]);
 
-  if (loading) {
+  if (featuredLoading) {
     return (
       <section className={styles.featuredProducts}>
         <div className={styles.sectionHeader}>
@@ -38,7 +32,7 @@ const FeaturedProducts = () => {
     );
   }
 
-  if (error) {
+  if (featuredError) {
     return (
       <section className={styles.featuredProducts}>
         <div className={styles.sectionHeader}>
@@ -46,7 +40,7 @@ const FeaturedProducts = () => {
           <p>Discover our handpicked collection of top-selling products.</p>
         </div>
 
-        <p>Unable to load featured products. Please try again later.</p>
+        <p>{featuredError}</p>
       </section>
     );
   }
@@ -59,7 +53,7 @@ const FeaturedProducts = () => {
       </div>
 
       <div className={styles.productsGrid}>
-        {products.map((product) => (
+        {featuredProducts.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>
