@@ -1,48 +1,55 @@
+import { useEffect, useState } from "react";
+
 import styles from "./FeaturedProducts.module.css";
 import ProductCard from "../../ui/ProductCard/ProductCard";
 
-// Dummy Images
-import laptopImage from "../../../assets/images/products/laptop.jpg";
-import mobileImage from "../../../assets/images/products/mobile.jpg";
-import headphoneImage from "../../../assets/images/products/headphone.jpg";
-import smartwatchImage from "../../../assets/images/products/smartwatch.jpg";
+import { getFeaturedProducts } from "../../../services/product.service";
 
 const FeaturedProducts = () => {
-  // Temporary static data
-  const featuredProducts = [
-    {
-      _id: 1,
-      name: "Gaming Laptop",
-      image: laptopImage,
-      price: 89999,
-      discountPrice: 79999,
-      rating: 4.8,
-    },
-    {
-      _id: 2,
-      name: "Flagship Smartphone",
-      image: mobileImage,
-      price: 69999,
-      discountPrice: 64999,
-      rating: 4.7,
-    },
-    {
-      _id: 3,
-      name: "Wireless Headphones",
-      image: headphoneImage,
-      price: 14999,
-      discountPrice: 11999,
-      rating: 4.6,
-    },
-    {
-      _id: 4,
-      name: "Smart Watch",
-      image: smartwatchImage,
-      price: 19999,
-      discountPrice: 16999,
-      rating: 4.5,
-    },
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchFeaturedProducts = async () => {
+    try {
+      const data = await getFeaturedProducts();
+      setProducts(data);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFeaturedProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <section className={styles.featuredProducts}>
+        <div className={styles.sectionHeader}>
+          <h2>Featured Products</h2>
+          <p>Discover our handpicked collection of top-selling products.</p>
+        </div>
+
+        <p>Loading featured products...</p>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className={styles.featuredProducts}>
+        <div className={styles.sectionHeader}>
+          <h2>Featured Products</h2>
+          <p>Discover our handpicked collection of top-selling products.</p>
+        </div>
+
+        <p>Unable to load featured products. Please try again later.</p>
+      </section>
+    );
+  }
 
   return (
     <section className={styles.featuredProducts}>
@@ -52,7 +59,7 @@ const FeaturedProducts = () => {
       </div>
 
       <div className={styles.productsGrid}>
-        {featuredProducts.map((product) => (
+        {products.map((product) => (
           <ProductCard key={product._id} product={product} />
         ))}
       </div>

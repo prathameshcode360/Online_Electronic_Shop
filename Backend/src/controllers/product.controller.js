@@ -235,3 +235,51 @@ export const deleteProduct = async (req, res) => {
     });
   }
 };
+
+export const getFeaturedProducts = async (req, res) => {
+  try {
+    const featuredProducts = await Product.find({
+      isFeatured: true,
+      isActive: true,
+    })
+      .populate("category")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({
+      success: true,
+      message: "Featured products fetched successfully",
+      data: featuredProducts,
+    });
+  } catch (error) {
+    console.error("Get Featured Products Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+export const getLatestProducts = async (req, res) => {
+  try {
+    const { limit = 10 } = req.query;
+
+    const latestProducts = await Product.find({ isActive: true })
+      .populate("category")
+      .sort({ createdAt: -1 })
+      .limit(parseInt(limit));
+
+    return res.status(200).json({
+      success: true,
+      message: "Latest products fetched successfully",
+      data: latestProducts,
+    });
+  } catch (error) {
+    console.error("Get Latest Products Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
