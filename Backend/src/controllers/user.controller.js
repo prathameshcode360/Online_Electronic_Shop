@@ -90,12 +90,14 @@ export const login = async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "Login Successful",
-      token,
-      user: {
-        id: existingUser._id,
-        name: existingUser.name,
-        email: existingUser.email,
-        role: existingUser.role,
+      data: {
+        token: token,
+        user: {
+          id: existingUser._id,
+          name: existingUser.name,
+          email: existingUser.email,
+          role: existingUser.role,
+        },
       },
     });
   } catch (error) {
