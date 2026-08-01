@@ -15,6 +15,7 @@ const initialState = {
   error: null,
 
   isAuthenticated: false,
+  isLoading: true,
 
   registerSuccess: false,
 };
@@ -72,6 +73,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
       state.isAuthenticated = false;
+      state.isLoading = false;
       state.registerSuccess = false;
 
       localStorage.removeItem("token");
@@ -83,6 +85,10 @@ const authSlice = createSlice({
 
     resetRegisterSuccess: (state) => {
       state.registerSuccess = false;
+    },
+
+    setAuthLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
   },
 
@@ -115,6 +121,7 @@ const authSlice = createSlice({
 
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
+        state.isLoading = false;
 
         state.user = action.payload.user;
         state.token = action.payload.token;
@@ -125,6 +132,7 @@ const authSlice = createSlice({
 
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
+        state.isLoading = false;
         state.error = action.payload;
 
         // Clear any stale authentication state
@@ -139,10 +147,12 @@ const authSlice = createSlice({
       .addCase(fetchProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
+        state.isLoading = true; // FIXED: Added this line
       })
 
       .addCase(fetchProfile.fulfilled, (state, action) => {
         state.loading = false;
+        state.isLoading = false;
         state.user = action.payload;
         state.isAuthenticated = true;
         // token remains from initialState (loaded from localStorage)
@@ -150,6 +160,7 @@ const authSlice = createSlice({
 
       .addCase(fetchProfile.rejected, (state, action) => {
         state.loading = false;
+        state.isLoading = false;
         state.error = action.payload;
 
         // Clear invalid authentication state
@@ -163,7 +174,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, clearAuthError, resetRegisterSuccess } =
+export const { logout, clearAuthError, resetRegisterSuccess, setAuthLoading } =
   authSlice.actions;
 
 export default authSlice.reducer;

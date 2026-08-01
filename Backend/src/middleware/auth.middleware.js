@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 const authenticate = async (req, res, next) => {
   try {
@@ -18,8 +19,24 @@ const authenticate = async (req, res, next) => {
     // Verify Token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Attach User Data to Request
-    req.user = decoded;
+    // Check if user still exists in database
+    const user = await User.findById(decoded.userId).select("-password");
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "User no longer exists. Please login again.",
+      });
+    }
+
+    // Attach User Data to Request using database values
+    req.user = {
+      userId: user._id,
+      role: user.role, // Use role from database, not from JWT
+    };
+
+    // Optionally attach full user data if needed elsewhere
+    req.userData = user;
 
     next();
   } catch (error) {

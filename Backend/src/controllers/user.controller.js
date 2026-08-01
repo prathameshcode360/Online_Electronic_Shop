@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose"; // Import mongoose for error checking
 
 export const register = async (req, res) => {
   try {
@@ -39,6 +40,14 @@ export const register = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
+
+    // NEW: Handle duplicate key error (race condition)
+    if (error.code === 11000 && error.keyPattern?.email) {
+      return res.status(409).json({
+        success: false,
+        message: "User already exists",
+      });
+    }
 
     return res.status(500).json({
       success: false,

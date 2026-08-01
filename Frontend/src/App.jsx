@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-import { fetchProfile } from "./features/auth/authSlice";
+import { fetchProfile, setAuthLoading } from "./features/auth/authSlice";
 import AppRouter from "./routes/AppRouter";
 
 function App() {
@@ -12,6 +12,9 @@ function App() {
 
     if (token) {
       dispatch(fetchProfile());
+    } else {
+      // NEW: If no token, auth check is complete
+      dispatch(setAuthLoading(false));
     }
   }, [dispatch]);
 
