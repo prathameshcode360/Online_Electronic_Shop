@@ -1,0 +1,486 @@
+.registerForm {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-lg);
+}
+
+.formGroup:last-of-type {
+  margin-bottom: var(--spacing-xl);
+}
+
+.formLabel {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  letter-spacing: 0.3px;
+}
+
+.formInput {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.formInput::placeholder {
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-normal);
+}
+
+.formInput:hover {
+  border-color: var(--color-secondary-light);
+}
+
+.formInput:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.1);
+  background-color: var(--color-surface);
+}
+
+.formInput.inputError {
+  border-color: var(--color-danger);
+}
+
+.formInput.inputError:focus {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.formInput:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Password strength indicator (optional) */
+.passwordStrength {
+  display: flex;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.passwordStrength .strengthBar {
+  flex: 1;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+  transition: background var(--transition);
+}
+
+.passwordStrength .strengthBar.active.weak {
+  background: var(--color-danger);
+}
+
+.passwordStrength .strengthBar.active.medium {
+  background: var(--color-warning);
+}
+
+.passwordStrength .strengthBar.active.strong {
+  background: var(--color-success);
+}
+
+.passwordStrengthText {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.passwordStrengthText.weak {
+  color: var(--color-danger);
+}
+
+.passwordStrengthText.medium {
+  color: var(--color-warning);
+}
+
+.passwordStrengthText.strong {
+  color: var(--color-success);
+}
+
+.errorMessage {
+  font-size: var(--font-size-sm);
+  color: var(--color-danger);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  animation: shake 0.3s ease;
+}
+
+.errorMessage::before {
+  content: "⚠️";
+  font-size: var(--font-size-sm);
+}
+
+.formError {
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  background-color: rgba(239, 68, 68, 0.05);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
+}
+
+.formError .errorMessage {
+  color: var(--color-danger);
+  margin: 0;
+}
+
+.formError .errorMessage::before {
+  content: "❌";
+}
+
+.submitButton {
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background-color: var(--color-primary);
+  color: var(--color-text-white);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Button shine effect */
+.submitButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left var(--transition-slow);
+}
+
+.submitButton:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.submitButton:hover:not(:disabled) {
+  background-color: var(--color-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 193, 7, 0.3);
+}
+
+.submitButton:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.2);
+}
+
+.submitButton:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.submitButton.buttonLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+}
+
+.loadingSpinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid var(--color-text-white);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-6px);
+  }
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+/* Success message (optional) */
+.successMessage {
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  background-color: rgba(34, 197, 94, 0.05);
+  border: 1px solid var(--color-success);
+  border-radius: var(--radius-md);
+  color: var(--color-success);
+  font-size: var(--font-size-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  animation: fadeInUp 0.5s ease;
+}
+
+.successMessage::before {
+  content: "✅";
+  font-size: var(--font-size-md);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Terms and conditions checkbox (optional) */
+.termsCheckbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+}
+
+.termsCheckbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--color-primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.termsCheckbox label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  line-height: 1.5;
+}
+
+.termsCheckbox label a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-fast);
+}
+
+.termsCheckbox label a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* Form footer with login link */
+.formFooter {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.formFooter p {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.formFooter a {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.formFooter a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .registerForm {
+    padding: var(--spacing-lg);
+    max-width: 100%;
+    margin: 0 var(--spacing-md);
+  }
+
+  .formInput {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+
+  .formLabel {
+    font-size: var(--font-size-xs);
+  }
+
+  .submitButton {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    font-size: var(--font-size-sm);
+  }
+
+  .errorMessage {
+    font-size: var(--font-size-xs);
+  }
+
+  .termsCheckbox label {
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .registerForm {
+    padding: var(--spacing-md);
+    margin: 0 var(--spacing-sm);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .formGroup {
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .formInput {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-xs);
+  }
+
+  .submitButton {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: var(--font-size-xs);
+  }
+
+  .loadingSpinner {
+    width: 16px;
+    height: 16px;
+  }
+
+  .formFooter p {
+    font-size: var(--font-size-xs);
+  }
+
+  .termsCheckbox input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Optional: Password toggle button */
+.passwordWrapper {
+  position: relative;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-text-light);
+  font-size: var(--font-size-md);
+  padding: var(--spacing-xs);
+  transition: color var(--transition-fast);
+}
+
+.passwordToggle:hover {
+  color: var(--color-text-primary);
+}
+
+/* Optional: Input with icon */
+.inputWithIcon {
+  position: relative;
+}
+
+.inputWithIcon .formInput {
+  padding-left: var(--spacing-2xl);
+}
+
+.inputIcon {
+  position: absolute;
+  left: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-light);
+  font-size: var(--font-size-md);
+  pointer-events: none;
+}
+
+/* Optional: Tooltip for password requirements */
+.passwordRequirements {
+  margin-top: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-background);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.passwordRequirements ul {
+  list-style: none;
+  padding: 0;
+  margin: var(--spacing-xs) 0 0 0;
+}
+
+.passwordRequirements ul li {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 2px 0;
+}
+
+.passwordRequirements ul li::before {
+  content: "•";
+  color: var(--color-text-light);
+}
+
+.passwordRequirements ul li.valid {
+  color: var(--color-success);
+}
+
+.passwordRequirements ul li.valid::before {
+  content: "✓";
+  color: var(--color-success);
+}
+
+.passwordRequirements ul li.invalid {
+  color: var(--color-danger);
+}
+
+.passwordRequirements ul li.invalid::before {
+  content: "✗";
+  color: var(--color-danger);
+}

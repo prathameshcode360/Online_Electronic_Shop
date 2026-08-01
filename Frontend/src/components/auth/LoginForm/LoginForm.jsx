@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { login } from "../../../features/auth/authSlice";
 import { loginSchema } from "../../../validations/auth.validation";
+import styles from "./LoginForm.module.css";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -34,27 +35,61 @@ const LoginForm = () => {
   }, [isAuthenticated, navigate]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="email">Email</label>
+    <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.formGroup}>
+        <label htmlFor="email" className={styles.formLabel}>
+          Email
+        </label>
 
-        <input id="email" type="email" {...register("email")} />
+        <input
+          id="email"
+          type="email"
+          className={`${styles.formInput} ${errors.email ? styles.inputError : ""}`}
+          {...register("email")}
+          placeholder="Enter your email"
+        />
 
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && (
+          <p className={styles.errorMessage}>{errors.email.message}</p>
+        )}
       </div>
 
-      <div>
-        <label htmlFor="password">Password</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="password" className={styles.formLabel}>
+          Password
+        </label>
 
-        <input id="password" type="password" {...register("password")} />
+        <input
+          id="password"
+          type="password"
+          className={`${styles.formInput} ${errors.password ? styles.inputError : ""}`}
+          {...register("password")}
+          placeholder="Enter your password"
+        />
 
-        {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && (
+          <p className={styles.errorMessage}>{errors.password.message}</p>
+        )}
       </div>
 
-      {error && <p>{error}</p>}
+      {error && (
+        <div className={styles.formError}>
+          <p className={styles.errorMessage}>{error}</p>
+        </div>
+      )}
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Logging In..." : "Login"}
+      <button
+        type="submit"
+        className={`${styles.submitButton} ${loading ? styles.buttonLoading : ""}`}
+        disabled={loading}>
+        {loading ? (
+          <>
+            <span className={styles.loadingSpinner}></span>
+            Logging In...
+          </>
+        ) : (
+          "Login"
+        )}
       </button>
     </form>
   );

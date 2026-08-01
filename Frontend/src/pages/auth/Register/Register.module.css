@@ -1,0 +1,563 @@
+.registerPage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2xl) var(--spacing-md);
+  background: linear-gradient(
+    135deg,
+    var(--color-background) 0%,
+    var(--color-surface) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background elements */
+.registerPage::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 193, 7, 0.06) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.registerPage::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 193, 7, 0.04) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.registerContainer {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.registerHeader {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-sm);
+  letter-spacing: -0.5px;
+}
+
+.title::before {
+  content: "🎉 ";
+  display: inline-block;
+  animation: celebrate 3s ease-in-out infinite;
+}
+
+@keyframes celebrate {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}
+
+.subtitle {
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.registerFooter {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.footerText {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.loginLink {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.loginLink::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  transition: width var(--transition-fast);
+}
+
+.loginLink:hover {
+  color: var(--color-primary-hover);
+}
+
+.loginLink:hover::after {
+  width: 100%;
+}
+
+/* Optional: Brand logo/icon above form */
+.brandIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.brandIcon img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.brandIcon .iconWrapper {
+  width: 80px;
+  height: 80px;
+  background: var(--color-primary-light);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+/* Optional: Social registration options */
+.socialRegister {
+  margin-top: var(--spacing-xl);
+}
+
+.socialRegister .divider {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.socialRegister .divider::before,
+.socialRegister .divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.socialRegister .divider span {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.socialButtons {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.socialButton {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.socialButton:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.socialButton .socialIcon {
+  font-size: var(--font-size-lg);
+}
+
+/* Optional: Back to home link */
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.backLink:hover {
+  color: var(--color-primary);
+  transform: translateX(-4px);
+}
+
+.backLink::before {
+  content: "←";
+  transition: transform var(--transition-fast);
+}
+
+.backLink:hover::before {
+  transform: translateX(-4px);
+}
+
+/* Optional: Benefits list */
+.benefits {
+  margin-top: var(--spacing-xl);
+  padding: var(--spacing-lg);
+  background: var(--color-background);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-light);
+}
+
+.benefits h4 {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.benefits ul li {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.benefits ul li::before {
+  content: "✓";
+  color: var(--color-success);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .registerPage {
+    padding: var(--spacing-xl) var(--spacing-md);
+  }
+
+  .registerContainer {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: var(--font-size-xl);
+  }
+
+  .subtitle {
+    font-size: var(--font-size-sm);
+  }
+
+  .registerHeader {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .registerFooter {
+    margin-top: var(--spacing-lg);
+    padding-top: var(--spacing-md);
+  }
+
+  .footerText {
+    font-size: var(--font-size-xs);
+  }
+
+  .socialButtons {
+    flex-direction: column;
+  }
+
+  .socialButton {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .registerPage::before,
+  .registerPage::after {
+    display: none;
+  }
+
+  .benefits {
+    padding: var(--spacing-md);
+  }
+
+  .benefits ul li {
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .registerPage {
+    padding: var(--spacing-lg) var(--spacing-sm);
+    min-height: 100vh;
+    align-items: flex-start;
+    padding-top: var(--spacing-2xl);
+  }
+
+  .registerContainer {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: var(--font-size-lg);
+  }
+
+  .title::before {
+    content: "🎉 ";
+  }
+
+  .subtitle {
+    font-size: var(--font-size-xs);
+  }
+
+  .registerHeader {
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .registerFooter {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-sm);
+  }
+
+  .footerText {
+    font-size: var(--font-size-xs);
+  }
+
+  .brandIcon .iconWrapper {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+
+  .socialRegister .divider span {
+    font-size: 0.6rem;
+  }
+
+  .socialButton {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .socialButton .socialIcon {
+    font-size: var(--font-size-md);
+  }
+
+  .benefits {
+    padding: var(--spacing-sm);
+  }
+
+  .benefits h4 {
+    font-size: var(--font-size-xs);
+  }
+
+  .benefits ul li {
+    font-size: 0.6rem;
+    padding: 2px 0;
+  }
+}
+
+/* Optional: Loading state for the page */
+.registerPage.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.registerPage.loading::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  z-index: 10;
+}
+
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Optional: Success notification */
+.successToast {
+  position: fixed;
+  top: var(--spacing-xl);
+  right: var(--spacing-xl);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+  border-left: 4px solid var(--color-success);
+  z-index: 1000;
+  animation: slideInRight 0.5s ease;
+}
+
+.successToast .toastMessage {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.successToast .toastMessage::before {
+  content: "✅";
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Optional: Background pattern */
+.registerPage.withPattern {
+  background-image:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(255, 193, 7, 0.03) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(255, 193, 7, 0.03) 0%,
+      transparent 50%
+    );
+}
+
+/* Optional: Card style variation */
+.registerContainer.cardStyle {
+  background: var(--color-surface);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+}
+
+@media (max-width: 480px) {
+  .registerContainer.cardStyle {
+    padding: var(--spacing-lg);
+  }
+}
+
+/* Optional: Progress steps indicator */
+.progressSteps {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.progressStep {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-light);
+}
+
+.progressStep .stepNumber {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-border);
+  color: var(--color-text-light);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-fast);
+}
+
+.progressStep.active .stepNumber {
+  background: var(--color-primary);
+  color: var(--color-text-white);
+}
+
+.progressStep.completed .stepNumber {
+  background: var(--color-success);
+  color: var(--color-text-white);
+}
+
+.progressStep .stepLabel {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .progressStep .stepLabel {
+    display: inline;
+  }
+}

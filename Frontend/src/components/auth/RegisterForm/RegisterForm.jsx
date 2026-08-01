@@ -9,6 +9,7 @@ import {
   resetRegisterSuccess,
 } from "../../../features/auth/authSlice";
 import { registerSchema } from "../../../validations/auth.validation";
+import styles from "./RegisterForm.module.css";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -38,47 +39,99 @@ const RegisterForm = () => {
   }, [registerSuccess, navigate, dispatch]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div>
-        <label htmlFor="name">Name</label>
+    <form className={styles.registerForm} onSubmit={handleSubmit(onSubmit)}>
+      <div className={styles.formGroup}>
+        <label htmlFor="name" className={styles.formLabel}>
+          Full Name
+        </label>
 
-        <input id="name" type="text" {...register("name")} />
+        <input
+          id="name"
+          type="text"
+          className={`${styles.formInput} ${errors.name ? styles.inputError : ""}`}
+          {...register("name")}
+          placeholder="Enter your full name"
+        />
 
-        {errors.name && <p>{errors.name.message}</p>}
+        {errors.name && (
+          <p className={styles.errorMessage}>{errors.name.message}</p>
+        )}
       </div>
 
-      <div>
-        <label htmlFor="email">Email</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="email" className={styles.formLabel}>
+          Email
+        </label>
 
-        <input id="email" type="email" {...register("email")} />
+        <input
+          id="email"
+          type="email"
+          className={`${styles.formInput} ${errors.email ? styles.inputError : ""}`}
+          {...register("email")}
+          placeholder="Enter your email"
+        />
 
-        {errors.email && <p>{errors.email.message}</p>}
+        {errors.email && (
+          <p className={styles.errorMessage}>{errors.email.message}</p>
+        )}
       </div>
 
-      <div>
-        <label htmlFor="password">Password</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="password" className={styles.formLabel}>
+          Password
+        </label>
 
-        <input id="password" type="password" {...register("password")} />
+        <input
+          id="password"
+          type="password"
+          className={`${styles.formInput} ${errors.password ? styles.inputError : ""}`}
+          {...register("password")}
+          placeholder="Create a password"
+        />
 
-        {errors.password && <p>{errors.password.message}</p>}
+        {errors.password && (
+          <p className={styles.errorMessage}>{errors.password.message}</p>
+        )}
       </div>
 
-      <div>
-        <label htmlFor="confirmPassword">Confirm Password</label>
+      <div className={styles.formGroup}>
+        <label htmlFor="confirmPassword" className={styles.formLabel}>
+          Confirm Password
+        </label>
 
         <input
           id="confirmPassword"
           type="password"
+          className={`${styles.formInput} ${errors.confirmPassword ? styles.inputError : ""}`}
           {...register("confirmPassword")}
+          placeholder="Confirm your password"
         />
 
-        {errors.confirmPassword && <p>{errors.confirmPassword.message}</p>}
+        {errors.confirmPassword && (
+          <p className={styles.errorMessage}>
+            {errors.confirmPassword.message}
+          </p>
+        )}
       </div>
 
-      {error && <p>{error}</p>}
+      {error && (
+        <div className={styles.formError}>
+          <p className={styles.errorMessage}>{error}</p>
+        </div>
+      )}
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Creating Account..." : "Create Account"}
+      <button
+        type="submit"
+        className={`${styles.submitButton} ${loading ? styles.buttonLoading : ""}`}
+        disabled={loading}>
+        {loading ? (
+          <>
+            <span className={styles.loadingSpinner}></span>
+            Creating Account...
+          </>
+        ) : (
+          "Create Account"
+        )}
       </button>
     </form>
   );
