@@ -1,0 +1,150 @@
+.cartItem {
+  display: grid;
+  grid-template-columns: 100px 1fr 120px 100px 50px;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease;
+}
+
+.cartItem:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.price {
+  font-size: 0.95rem;
+  color: #666;
+  margin: 0;
+}
+
+.unavailable {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quantityBtn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f8f9fa;
+  color: #333;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.quantityBtn:hover:not(:disabled) {
+  background: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.quantityBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.quantity {
+  min-width: 32px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.itemTotal {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #999;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.removeBtn:hover:not(:disabled) {
+  color: #dc3545;
+  background: #fff5f5;
+}
+
+.removeBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .cartItem {
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .image {
+    width: 80px;
+    height: 80px;
+    grid-row: 1 / 4;
+  }
+
+  .details {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .quantityControls {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .itemTotal {
+    grid-column: 1;
+    grid-row: 3;
+    justify-self: start;
+  }
+
+  .removeBtn {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: end;
+  }
+}

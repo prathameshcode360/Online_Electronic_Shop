@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
 import { fetchProfile, setAuthLoading } from "./features/auth/authSlice";
+import { fetchCart } from "./features/cart/cartSlice";
 import AppRouter from "./routes/AppRouter";
 
 function App() {
@@ -11,9 +12,15 @@ function App() {
     const token = localStorage.getItem("token");
 
     if (token) {
-      dispatch(fetchProfile());
+      dispatch(fetchProfile())
+        .unwrap()
+        .then(() => {
+          dispatch(fetchCart());
+        })
+        .catch(() => {
+          // fetchProfile already handles invalid token
+        });
     } else {
-      // NEW: If no token, auth check is complete
       dispatch(setAuthLoading(false));
     }
   }, [dispatch]);

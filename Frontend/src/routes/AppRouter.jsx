@@ -7,6 +7,7 @@ import AuthLayout from "../layouts/AuthLayout";
 
 import HomePage from "../pages/customer/Home/HomePage";
 import ProfilePage from "../pages/customer/Profile/ProfilePage";
+import CartPage from "../pages/customer/Cart/CartPage";
 
 import LoginPage from "../pages/auth/Login/Login";
 import RegisterPage from "../pages/auth/Register/Register";
@@ -14,14 +15,15 @@ import RegisterPage from "../pages/auth/Register/Register";
 const AppRouter = () => {
   return (
     <Routes>
-      {/* Protected Routes */}
-      <Route element={<ProtectedRoute />}>
-        <Route path="/profile" element={<ProfilePage />} />
-      </Route>
-
       {/* Customer Routes */}
       <Route path="/" element={<CustomerLayout />}>
         <Route index element={<HomePage />} />
+
+        {/* Protected Customer Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="profile" element={<ProfilePage />} />
+          <Route path="cart" element={<CartPage />} />
+        </Route>
       </Route>
 
       {/* Authentication Routes */}

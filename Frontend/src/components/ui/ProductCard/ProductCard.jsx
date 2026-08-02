@@ -1,8 +1,32 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
+import { addItemToCart } from "../../../features/cart/cartSlice";
+
 import styles from "./ProductCard.module.css";
 
 const ProductCard = ({ product }) => {
   const { _id, name, images, price } = product;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.cart);
+
+  const handleAddToCart = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+      return;
+    }
+
+    dispatch(
+      addItemToCart({
+        productId: _id,
+        quantity: 1,
+      }),
+    );
+  };
 
   return (
     <article className={styles.productCard}>
@@ -17,8 +41,12 @@ const ProductCard = ({ product }) => {
           <span className={styles.price}>₹{price}</span>
         </div>
 
-        <button type="button" className={styles.addToCartButton}>
-          Add to Cart
+        <button
+          type="button"
+          className={styles.addToCartButton}
+          onClick={handleAddToCart}
+          disabled={loading}>
+          {loading ? "Adding..." : "Add to Cart"}
         </button>
       </div>
     </article>
