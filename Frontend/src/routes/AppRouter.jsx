@@ -9,9 +9,13 @@ import HomePage from "../pages/customer/Home/HomePage";
 import ProfilePage from "../pages/customer/Profile/ProfilePage";
 import CartPage from "../pages/cart/CartPage";
 
+// New Imports
+import CheckoutPage from "../pages/order/Checkout/CheckoutPage";
+import OrdersPage from "../pages/order/Orders/OrdersPage";
+import OrderDetailsPage from "../pages/order/OrderDetails/OrderDetailsPage";
+
 import LoginPage from "../pages/auth/Login/Login";
 import RegisterPage from "../pages/auth/Register/Register";
-
 const AppRouter = () => {
   return (
     <Routes>
@@ -23,6 +27,11 @@ const AppRouter = () => {
         <Route element={<ProtectedRoute />}>
           <Route path="profile" element={<ProfilePage />} />
           <Route path="cart" element={<CartPage />} />
+
+          {/* Order Routes */}
+          <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="orders" element={<OrdersPage />} />
+          <Route path="orders/:orderId" element={<OrderDetailsPage />} />
         </Route>
       </Route>
 

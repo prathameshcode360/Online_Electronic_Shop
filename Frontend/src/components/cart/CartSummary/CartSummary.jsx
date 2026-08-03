@@ -1,6 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 import styles from "./CartSummary.module.css";
 
 const CartSummary = ({ totalAmount, itemCount, loading, onClearCart }) => {
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    navigate("/checkout");
+  };
+
   return (
     <div className={styles.summary}>
       <div className={styles.summaryDetails}>
@@ -8,9 +16,12 @@ const CartSummary = ({ totalAmount, itemCount, loading, onClearCart }) => {
           <span className={styles.label}>Total Items:</span>
           <span className={styles.value}>{itemCount}</span>
         </div>
+
         <div className={styles.totalSection}>
           <span className={styles.label}>Grand Total:</span>
-          <span className={styles.totalAmount}>₹{totalAmount}</span>
+          <span className={styles.totalAmount}>
+            ₹{totalAmount.toLocaleString("en-IN")}
+          </span>
         </div>
       </div>
 
@@ -21,9 +32,11 @@ const CartSummary = ({ totalAmount, itemCount, loading, onClearCart }) => {
           className={`${styles.clearBtn} ${loading ? styles.loading : ""}`}>
           {loading ? "Processing..." : "Clear Cart"}
         </button>
+
         <button
-          className={styles.checkoutBtn}
-          disabled={loading || itemCount === 0}>
+          onClick={handleCheckout}
+          disabled={loading || itemCount === 0}
+          className={styles.checkoutBtn}>
           Proceed to Checkout →
         </button>
       </div>

@@ -11,11 +11,11 @@ import {
 // Initial State
 const initialState = {
   items: [],
+  updatingItems: {}, // Track which items are being updated by productId
+  removingItems: {}, // Track which items are being removed by productId
 
   isFetching: false,
   isAdding: false,
-  isUpdating: false,
-  isRemoving: false,
   isClearing: false,
 
   error: null,
@@ -61,7 +61,7 @@ export const addItemToCart = createAsyncThunk(
   },
 );
 
-// Update Item Quantity
+// Update Item Quantity - Per-item locking
 export const updateItemQuantity = createAsyncThunk(
   "cart/updateItemQuantity",
   async ({ productId, quantity }, thunkAPI) => {
@@ -74,13 +74,15 @@ export const updateItemQuantity = createAsyncThunk(
     }
   },
   {
-    condition: (_, { getState }) => {
-      return !getState().cart.isUpdating;
+    condition: ({ productId }, { getState }) => {
+      const state = getState().cart;
+      // Only prevent updates to the same item that's already updating
+      return !state.updatingItems[productId];
     },
   },
 );
 
-// Remove Item From Cart
+// Remove Item From Cart - Per-item locking
 export const removeItemFromCart = createAsyncThunk(
   "cart/removeItemFromCart",
   async (productId, thunkAPI) => {
@@ -93,8 +95,10 @@ export const removeItemFromCart = createAsyncThunk(
     }
   },
   {
-    condition: (_, { getState }) => {
-      return !getState().cart.isRemoving;
+    condition: (productId, { getState }) => {
+      const state = getState().cart;
+      // Only prevent removal of the same item that's already being removed
+      return !state.removingItems[productId];
     },
   },
 );
@@ -163,35 +167,41 @@ const cartSlice = createSlice({
         state.error = action.payload;
       })
 
-      // Update Item Quantity
-      .addCase(updateItemQuantity.pending, (state) => {
-        state.isUpdating = true;
+      // Update Item Quantity - Per-item tracking
+      .addCase(updateItemQuantity.pending, (state, action) => {
+        const { productId } = action.meta.arg;
+        state.updatingItems[productId] = true;
         state.error = null;
       })
 
       .addCase(updateItemQuantity.fulfilled, (state, action) => {
-        state.isUpdating = false;
+        const { productId } = action.meta.arg;
+        delete state.updatingItems[productId];
         state.items = action.payload.items;
       })
 
       .addCase(updateItemQuantity.rejected, (state, action) => {
-        state.isUpdating = false;
+        const { productId } = action.meta.arg;
+        delete state.updatingItems[productId];
         state.error = action.payload;
       })
 
-      // Remove Item From Cart
-      .addCase(removeItemFromCart.pending, (state) => {
-        state.isRemoving = true;
+      // Remove Item From Cart - Per-item tracking
+      .addCase(removeItemFromCart.pending, (state, action) => {
+        const productId = action.meta.arg;
+        state.removingItems[productId] = true;
         state.error = null;
       })
 
       .addCase(removeItemFromCart.fulfilled, (state, action) => {
-        state.isRemoving = false;
+        const productId = action.meta.arg;
+        delete state.removingItems[productId];
         state.items = action.payload.items;
       })
 
       .addCase(removeItemFromCart.rejected, (state, action) => {
-        state.isRemoving = false;
+        const productId = action.meta.arg;
+        delete state.removingItems[productId];
         state.error = action.payload;
       })
 

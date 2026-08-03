@@ -16,7 +16,17 @@ import styles from "./CartPage.module.css";
 const CartPage = () => {
   const dispatch = useDispatch();
 
-  const { items, loading } = useSelector((state) => state.cart);
+  const {
+    items,
+    isFetching,
+    isAdding,
+    isClearing,
+    updatingItems,
+    removingItems,
+  } = useSelector((state) => state.cart);
+
+  // Only use global loading for operations that affect the whole cart
+  const globalLoading = isFetching || isAdding || isClearing;
 
   const { totalAmount, itemCount } = useMemo(() => {
     return items.reduce(
@@ -24,7 +34,10 @@ const CartPage = () => {
         totalAmount: acc.totalAmount + item.product.price * item.quantity,
         itemCount: acc.itemCount + item.quantity,
       }),
-      { totalAmount: 0, itemCount: 0 },
+      {
+        totalAmount: 0,
+        itemCount: 0,
+      },
     );
   }, [items]);
 
@@ -69,22 +82,30 @@ const CartPage = () => {
         <h1 className={styles.pageTitle}>Shopping Cart</h1>
 
         <div className={styles.cartItems}>
-          {items.map((item) => (
-            <CartItem
-              key={item.product._id}
-              item={item}
-              loading={loading}
-              onIncrease={() => handleIncreaseQuantity(item)}
-              onDecrease={() => handleDecreaseQuantity(item)}
-              onRemove={() => handleRemoveItem(item.product._id)}
-            />
-          ))}
+          {items.map((item) => {
+            const productId = item.product._id;
+            // Per-item loading states
+            const isUpdating = !!updatingItems[productId];
+            const isRemoving = !!removingItems[productId];
+            const itemLoading = isUpdating || isRemoving;
+
+            return (
+              <CartItem
+                key={productId}
+                item={item}
+                loading={itemLoading}
+                onIncrease={() => handleIncreaseQuantity(item)}
+                onDecrease={() => handleDecreaseQuantity(item)}
+                onRemove={() => handleRemoveItem(productId)}
+              />
+            );
+          })}
         </div>
 
         <CartSummary
           totalAmount={totalAmount}
           itemCount={itemCount}
-          loading={loading}
+          loading={globalLoading}
           onClearCart={handleClearCart}
         />
       </div>
