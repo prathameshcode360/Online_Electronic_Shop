@@ -5,11 +5,11 @@ import {
   updateItemQuantity,
   removeItemFromCart,
   clearUserCart,
-} from "../../../features/cart/cartSlice";
+} from "../../features/cart/cartSlice";
 
-import CartItem from "../../../components/cart/CartItem/CartItem";
-import CartSummary from "../../../components/cart/CartSummary/CartSummary";
-import EmptyCart from "../../../components/cart/EmptyCart/EmptyCart";
+import CartItem from "../../components/cart/CartItem/CartItem";
+import CartSummary from "../../components/cart/CartSummary/CartSummary";
+import EmptyCart from "../../components/cart/EmptyCart/EmptyCart";
 
 import styles from "./CartPage.module.css";
 

@@ -135,7 +135,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
 
-        // Clear any stale authentication state
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
@@ -147,7 +146,7 @@ const authSlice = createSlice({
       .addCase(fetchProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.isLoading = true; // FIXED: Added this line
+        state.isLoading = true;
       })
 
       .addCase(fetchProfile.fulfilled, (state, action) => {
@@ -155,7 +154,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload;
         state.isAuthenticated = true;
-        // token remains from initialState (loaded from localStorage)
       })
 
       .addCase(fetchProfile.rejected, (state, action) => {
@@ -163,12 +161,10 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
 
-        // Clear invalid authentication state
         state.user = null;
         state.token = null;
         state.isAuthenticated = false;
 
-        // Remove expired/invalid token from localStorage
         localStorage.removeItem("token");
       });
   },

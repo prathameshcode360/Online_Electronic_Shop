@@ -7,7 +7,7 @@ import AuthLayout from "../layouts/AuthLayout";
 
 import HomePage from "../pages/customer/Home/HomePage";
 import ProfilePage from "../pages/customer/Profile/ProfilePage";
-import CartPage from "../pages/customer/Cart/CartPage";
+import CartPage from "../pages/cart/CartPage";
 
 import LoginPage from "../pages/auth/Login/Login";
 import RegisterPage from "../pages/auth/Register/Register";

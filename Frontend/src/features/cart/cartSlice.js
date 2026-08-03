@@ -12,7 +12,12 @@ import {
 const initialState = {
   items: [],
 
-  loading: false,
+  isFetching: false,
+  isAdding: false,
+  isUpdating: false,
+  isRemoving: false,
+  isClearing: false,
+
   error: null,
 
   fetched: false,
@@ -30,6 +35,11 @@ export const fetchCart = createAsyncThunk(
       );
     }
   },
+  {
+    condition: (_, { getState }) => {
+      return !getState().cart.isFetching;
+    },
+  },
 );
 
 // Add Item To Cart
@@ -43,6 +53,11 @@ export const addItemToCart = createAsyncThunk(
         error.response?.data?.message || "Failed to add item to cart",
       );
     }
+  },
+  {
+    condition: (_, { getState }) => {
+      return !getState().cart.isAdding;
+    },
   },
 );
 
@@ -58,6 +73,11 @@ export const updateItemQuantity = createAsyncThunk(
       );
     }
   },
+  {
+    condition: (_, { getState }) => {
+      return !getState().cart.isUpdating;
+    },
+  },
 );
 
 // Remove Item From Cart
@@ -71,6 +91,11 @@ export const removeItemFromCart = createAsyncThunk(
         error.response?.data?.message || "Failed to remove item from cart",
       );
     }
+  },
+  {
+    condition: (_, { getState }) => {
+      return !getState().cart.isRemoving;
+    },
   },
 );
 
@@ -86,6 +111,11 @@ export const clearUserCart = createAsyncThunk(
       );
     }
   },
+  {
+    condition: (_, { getState }) => {
+      return !getState().cart.isClearing;
+    },
+  },
 );
 
 const cartSlice = createSlice({
@@ -93,92 +123,96 @@ const cartSlice = createSlice({
 
   initialState,
 
-  reducers: {},
+  reducers: {
+    resetCart: () => initialState,
+  },
 
   extraReducers: (builder) => {
     builder
 
       // Fetch Cart
       .addCase(fetchCart.pending, (state) => {
-        state.loading = true;
+        state.isFetching = true;
         state.error = null;
       })
 
       .addCase(fetchCart.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isFetching = false;
         state.items = action.payload.items;
         state.fetched = true;
       })
 
       .addCase(fetchCart.rejected, (state, action) => {
-        state.loading = false;
+        state.isFetching = false;
         state.error = action.payload;
       })
 
       // Add Item To Cart
       .addCase(addItemToCart.pending, (state) => {
-        state.loading = true;
+        state.isAdding = true;
         state.error = null;
       })
 
       .addCase(addItemToCart.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isAdding = false;
         state.items = action.payload.items;
       })
 
       .addCase(addItemToCart.rejected, (state, action) => {
-        state.loading = false;
+        state.isAdding = false;
         state.error = action.payload;
       })
 
       // Update Item Quantity
       .addCase(updateItemQuantity.pending, (state) => {
-        state.loading = true;
+        state.isUpdating = true;
         state.error = null;
       })
 
       .addCase(updateItemQuantity.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isUpdating = false;
         state.items = action.payload.items;
       })
 
       .addCase(updateItemQuantity.rejected, (state, action) => {
-        state.loading = false;
+        state.isUpdating = false;
         state.error = action.payload;
       })
 
       // Remove Item From Cart
       .addCase(removeItemFromCart.pending, (state) => {
-        state.loading = true;
+        state.isRemoving = true;
         state.error = null;
       })
 
       .addCase(removeItemFromCart.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isRemoving = false;
         state.items = action.payload.items;
       })
 
       .addCase(removeItemFromCart.rejected, (state, action) => {
-        state.loading = false;
+        state.isRemoving = false;
         state.error = action.payload;
       })
 
       // Clear Cart
       .addCase(clearUserCart.pending, (state) => {
-        state.loading = true;
+        state.isClearing = true;
         state.error = null;
       })
 
       .addCase(clearUserCart.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isClearing = false;
         state.items = action.payload.items;
       })
 
       .addCase(clearUserCart.rejected, (state, action) => {
-        state.loading = false;
+        state.isClearing = false;
         state.error = action.payload;
       });
   },
 });
+
+export const { resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;
