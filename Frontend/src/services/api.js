@@ -10,17 +10,30 @@ const api = axios.create({
 // Request interceptor to add token to every request
 api.interceptors.request.use(
   (config) => {
-    // Get token from localStorage (or sessionStorage)
     const token = localStorage.getItem("token");
 
-    // If token exists, add it to the Authorization header
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
     return config;
   },
+  (error) => Promise.reject(error),
+);
+
+// Response interceptor to handle unauthorized responses
+api.interceptors.response.use(
+  (response) => response,
   (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+
+      // Prevent redirect loop if already on login page
+      if (window.location.pathname !== "/login") {
+        window.location.href = "/login";
+      }
+    }
+
     return Promise.reject(error);
   },
 );

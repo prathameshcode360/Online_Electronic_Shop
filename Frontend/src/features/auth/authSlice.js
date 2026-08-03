@@ -70,13 +70,14 @@ const authSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.token = null;
+
       state.loading = false;
       state.error = null;
+
       state.isAuthenticated = false;
       state.isLoading = false;
-      state.registerSuccess = false;
 
-      localStorage.removeItem("token");
+      state.registerSuccess = false;
     },
 
     clearAuthError: (state) => {

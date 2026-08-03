@@ -7,6 +7,9 @@ import {
   FaChevronRight,
 } from "react-icons/fa";
 
+import { logout } from "../../../features/auth/authSlice";
+import { resetCart } from "../../../features/cart/cartSlice";
+
 import styles from "./ProfilePage.module.css";
 
 const ProfilePage = () => {
@@ -16,8 +19,12 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    // dispatch(logout());
-    // navigate("/login");
+    localStorage.removeItem("token");
+
+    dispatch(resetCart());
+    dispatch(logout());
+
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -44,6 +51,7 @@ const ProfilePage = () => {
             <p className={styles.userEmail}>
               {user?.email || "guest@example.com"}
             </p>
+
             {user?.role && <span className={styles.userRole}>{user.role}</span>}
           </div>
         </div>

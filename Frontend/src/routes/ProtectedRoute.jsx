@@ -5,15 +5,17 @@ const ProtectedRoute = () => {
   const { isAuthenticated, isLoading } = useSelector((state) => state.auth);
   const location = useLocation();
 
-  // NEW: Show nothing while checking authentication status
+  // Show a loading state while checking authentication
   if (isLoading) {
-    return null; // Or a loading spinner component
+    return <div>Loading...</div>;
   }
 
+  // Redirect unauthenticated users to the login page
   if (!isAuthenticated) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
+  // Render protected routes
   return <Outlet />;
 };
 
